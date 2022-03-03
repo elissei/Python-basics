@@ -1,0 +1,119 @@
+import copy
+
+def sudoku_oikein(sudoku: list):
+ 
+    for i in range(0,9):
+        if rivi_oikein(sudoku, i) == False:
+            return False
+    
+    for i in range(0,9):
+        if sarake_oikein(sudoku, i) == False:
+            return False
+        
+    a = 0          
+    while a <= 6:
+        b = 0
+        while b <= 6:
+            if nelio_oikein(sudoku, a, b) == False:
+                return False
+            b += 3
+        a += 3
+    return True
+ 
+ 
+def rivi_oikein(sudoku: list, rivi: int):
+    luvut = []
+    for luku in sudoku[rivi]:
+        if luku > 0 and luku in luvut:
+            return False
+        luvut.append(luku)
+ 
+    return True
+ 
+def sarake_oikein(sudoku: list, sarake: int):
+    luvut = []
+    for rivi in sudoku:
+        luku = rivi[sarake]
+        if luku > 0 and luku in luvut:
+            return False
+        luvut.append(luku)
+ 
+    return True
+ 
+def nelio_oikein(sudoku: list, rivi: int, sarake: int):
+    luvut = []
+    for r in range(rivi, rivi+3):
+        for s in range(sarake, sarake+3):
+            luku = sudoku[r][s]
+            if luku > 0 and luku in luvut:
+                return False
+            luvut.append(luku)
+ 
+    return True
+
+def tulosta(sudoku):
+    
+    lista = sudoku[:]
+    
+    for rivi in lista:
+        for i in range(len(rivi)):
+            if rivi[i] == 0:
+                rivi[i] = "_"
+                
+    
+    i = 0   
+    while i < 9:
+        x = 0
+        if i % 3 == 0:
+            print()
+        while x < 9:
+            print(f"{lista[i][x]} {lista[i][x+1]} {lista[i][x+2]}  ",end="")
+            x += 3
+        print()
+        i += 1
+
+
+def lisays(sudoku: list, rivi_nro: int, sarake_nro: int, luku:int):
+    
+    if 0 < luku < 10:
+        sudoku[rivi_nro][sarake_nro] = luku   
+
+
+def kopioi_ja_lisaa(sudoku: list, rivi_nro: int, sarake_nro: int, luku:int):
+    
+    kopio = copy.deepcopy(sudoku)
+
+    if 0 < luku < 10:
+        kopio[rivi_nro][sarake_nro] = luku
+
+    return kopio
+
+
+if __name__ == "__main__":
+
+
+    sudoku  = [
+        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0]]
+
+    #tulosta(sudoku)
+    #lisays(sudoku, 0, 0, 2)
+    #lisays(sudoku, 1, 2, 7)
+    #lisays(sudoku, 5, 7, 3)
+    #print()
+    #print("Kolme numeroa lisätty:")
+    #print()
+    #tulosta(sudoku)
+    kopio = kopioi_ja_lisaa(sudoku, 0, 0, 2)
+    print("Alkuperäinen:")
+    tulosta(sudoku)
+    print()
+    print("Kopio:")
+    tulosta(kopio)
