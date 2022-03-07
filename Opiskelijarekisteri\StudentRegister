@@ -1,0 +1,119 @@
+def lisaa_opiskelija(rekisteri, nimi):
+    
+    rekisteri[nimi] = "ei suorituksia"
+    return rekisteri
+    
+    
+def tulosta(rekisteri, nimi):
+    
+    if nimi in rekisteri:
+        temp = rekisteri[nimi]
+        x = 0
+        j = 0
+        for avain, arvo in rekisteri.items():
+            if avain == nimi:
+                if arvo == "ei suorituksia":
+                    print(f"{avain}:")
+                    print(f" {arvo}")
+                else:
+                    print(f"{nimi}:")
+                    for i in temp:
+                        x += i[1]
+                        j += 1
+                    print(f" suorituksia {j} kurssilta:")
+                    for i in temp:
+                        print(f"  {i[0]} {i[1]}")
+                    print(f" keskiarvo {x/j}")   
+    else:
+        print(f"ei löytynyt ketään nimellä {nimi}")   
+
+
+def lisaa_suoritus(rekisteri, nimi, suoritus):
+        
+        temp = rekisteri[nimi]
+        if suoritus[1] != 0:           
+            if rekisteri[nimi] == "ei suorituksia":
+                rekisteri[nimi] = []
+                rekisteri[nimi].append(suoritus)    
+            else:
+                for i in temp:
+                    if suoritus[0] == i[0]:
+                        if suoritus[1] > i[1]:
+                            x = temp.index(i)
+                            temp[x] = suoritus
+                            rekisteri[nimi] = temp                           
+                    else:
+                        f = 0
+                        for j in temp:
+                            if suoritus[0] == j[0]:
+                                f = 0
+                                break
+                            else:
+                                f += 1
+                        if f > 0:
+                            rekisteri[nimi].append(suoritus)
+
+def kooste(opiskelijat):
+    
+    koko = len(opiskelijat)
+    print(f"opiskelijoita {koko}")
+    e_s = 0
+    e_s_n = ""
+    
+    pka = 0
+    pka_n = ""
+    for nimi, kurssi in opiskelijat.items():
+        suoritukset = len(kurssi) 
+        if suoritukset > e_s:
+            e_s = suoritukset
+            e_s_n = nimi
+    print(f"eniten suorituksia {e_s} {e_s_n}")
+    
+    for nimi, kurssi in opiskelijat.items():
+        summa = 0
+        lkm = 0
+        ka = 0
+        for i in kurssi:
+            summa += i[1]
+            lkm += 1
+        ka = summa / lkm
+        if ka > pka:
+            pka = ka
+            pka_n = nimi
+            
+    print(f"paras keskiarvo {pka} {pka_n}")                            
+                
+    
+    
+    
+if __name__ == "__main__":
+	#opiskelijat = {}
+	#lisaa_opiskelija(opiskelijat, "Pekka")
+	#lisaa_opiskelija(opiskelijat, "Liisa")
+	#tulosta(opiskelijat, "Pekka")
+	#tulosta(opiskelijat, "Liisa")
+	#tulosta(opiskelijat, "Jukka")
+
+	#opiskelijat = {}
+	#lisaa_opiskelija(opiskelijat, "Pekka")
+	#lisaa_suoritus(opiskelijat, "Pekka", ("Ohpe", 3))
+	#lisaa_suoritus(opiskelijat, "Pekka", ("Tira", 2))
+	#tulosta(opiskelijat, "Pekka")
+
+	#opiskelijat = {}
+	#lisaa_opiskelija(opiskelijat, "Pekka")
+	#lisaa_suoritus(opiskelijat, "Pekka", ("Ohpe", 3))
+	#lisaa_suoritus(opiskelijat, "Pekka", ("Tira", 2))
+	#lisaa_suoritus(opiskelijat, "Pekka", ("Lama", 0))
+	#lisaa_suoritus(opiskelijat, "Pekka", ("Ohpe", 2))
+	#tulosta(opiskelijat, "Pekka")
+
+	#opiskelijat = {}
+	#lisaa_opiskelija(opiskelijat, "Pekka")
+	#lisaa_opiskelija(opiskelijat, "Liisa")
+	#lisaa_suoritus(opiskelijat, "Pekka", ("Lama", 1))
+	#lisaa_suoritus(opiskelijat, "Pekka", ("Ohpe", 1))
+	#lisaa_suoritus(opiskelijat, "Pekka", ("Tira", 1))
+	#lisaa_suoritus(opiskelijat, "Liisa", ("Ohpe", 5))
+	#lisaa_suoritus(opiskelijat, "Liisa", ("Jtkt", 4))
+	#kooste(opiskelijat)
